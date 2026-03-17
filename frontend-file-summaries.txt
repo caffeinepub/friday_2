@@ -1,0 +1,8 @@
+{
+  "frontend/src/hooks/useSpeechRecognition.ts": "Web Speech API hook for voice-to-text with local TypeScript interface definitions to avoid missing DOM type errors, supporting English, Telugu, and Hindi language codes.",
+  "frontend/src/components/SettingsSidebar.tsx": "Slide-in settings panel with language selector, voice controls, user name input, principal display, clear history button, about section, and logout functionality.",
+  "frontend/src/components/LoginScreen.tsx": "Branded FRIDAY login screen with animated background, feature pills, and Internet Identity authentication button.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time users to enter their display name, saved to the backend via saveCallerUserProfile.",
+  "frontend/src/components/Layout.tsx": "Main app layout with header (orb, title, status), chat window, input area, settings sidebar integration, voice synthesis, and footer attribution.",
+  "frontend/src/App.tsx": "Root application component handling authentication gating, profile loading state, profile setup modal, and rendering the main Layout with the user's name."
+}

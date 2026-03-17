@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Building FRIDAY - an advanced AI personal assistant similar to JARVIS. Python-based system with modular architecture including speech recognition, LLM brain, task planner, automation engine, device control, memory system, and voice output. Supports English, Telugu, Hindi and other languages. Features voice commands with wake word detection, device/system control, file management, email automation, image generation, web search, and user authentication.",
+  "architectural_notes": [
+    "Modular Python architecture: core/brain, speech/recognizer, speech/synthesizer, automation/device_control, automation/file_manager, automation/email_handler, integrations/web_search, integrations/image_gen, security/auth",
+    "LLM brain uses OpenAI GPT-4 with dynamic system prompt, conversation history, and vector memory context injection",
+    "Speech pipeline: Whisper AI for STT (auto language detection), pyttsx3/gTTS/ElevenLabs for TTS depending on language and quality setting",
+    "Memory system: SQLite for structured storage (conversations, preferences, tasks) + ChromaDB for semantic/vector search",
+    "Device control uses PyAutoGUI + subprocess + psutil, cross-platform (Windows/Linux/macOS) with platform detection",
+    "Security uses SHA-256 password hashing with salt; production should add proper encryption and session tokens"
+  ],
+  "known_issues": [
+    "PyAudio installation requires platform-specific steps (pipwin on Windows, apt on Linux)",
+    "googletrans 4.0.0rc1 is unstable; may need replacement with Google Cloud Translation API for production",
+    "Wake word detection via string matching is basic; Picovoice Porcupine recommended for accurate wake word detection"
+  ],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- FRIDAY AI assistant logo — a glowing golden hexagonal emblem with the letter 'F' in the center and subtle circuit-line details radiating outward on a transparent background (friday-logo.dim_256x256.png)\n- FRIDAY login screen background — a deep black space-like background with faint golden geometric grid lines and soft glowing nodes, futuristic HUD aesthetic (friday-bg.dim_1920x1080.png)\n- FRIDAY avatar icon — a sleek golden AI orb with a soft inner glow and subtle ring orbiting it, suitable as a chat message avatar (friday-avatar.dim_128x128.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-jarvis-inspired-dark-ui-theme-for-friday-with-a-sleek-futuristic-aesthetic-deep-black-dark-charcoal-backgrounds-glowing-amber-gold-accent-colors-clean-sans-serif-typography-animated-hud-style-elements-circular-audio-visualizer-pulsing-orb-for-active-state-and-a-responsive-two-panel-layout-sidebar-for-history-settings-main-chat-area-apply-this-theme-consistently-across-all-components",
+      "title": "Create a JARVIS-inspired dark UI theme for FRIDAY with a sleek, futuristic aesthetic: deep black/dark charcoal backgrounds, glowing amber/gold accent colors, clean sans-serif typography, animated HUD-style elements (circular audio visualizer, pulsing orb for active state), and a responsive two-panel layout (sidebar for history/settings, main chat area). Apply this theme consistently across all components.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-friday-chat-interface-with-a-full-screen-chat-window-that-displays-conversation-messages-differentiating-between-user-messages-and-friday-s-responses-with-distinct-styling-include-a-text-input-field-with-a-send-button-and-a-microphone-button-for-voice-input-display-friday-s-thinking-animation-while-processing-a-response",
+      "title": "Build the FRIDAY chat interface with a full-screen chat window that displays conversation messages, differentiating between user messages and FRIDAY's responses with distinct styling. Include a text input field with a send button and a microphone button for voice input. Display FRIDAY's 'thinking' animation while processing a response.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-browser-based-voice-interaction-using-the-web-speech-api-speech-recognition-speechrecognition-for-converting-user-voice-to-text-and-speech-synthesis-speechsynthesis-for-friday-to-speak-responses-aloud-include-a-visual-audio-waveform-pulse-animation-while-friday-is-speaking-support-toggling-voice-output-on-off",
+      "title": "Implement browser-based voice interaction using the Web Speech API: speech recognition (SpeechRecognition) for converting user voice to text, and speech synthesis (SpeechSynthesis) for FRIDAY to speak responses aloud. Include a visual audio waveform/pulse animation while FRIDAY is speaking. Support toggling voice output on/off.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-wake-word-detection-simulation-in-the-frontend-when-the-user-types-or-says-hey-friday-friday-activates-from-an-idle-state-plays-a-brief-activation-sound-or-animation-and-acknowledges-with-a-greeting-include-an-idle-active-state-visual-distinction-e-g-dimmed-orb-when-idle-glowing-orb-when-active",
+      "title": "Implement a wake word detection simulation in the frontend: when the user types or says 'Hey Friday', FRIDAY activates from an idle state, plays a brief activation sound or animation, and acknowledges with a greeting. Include an idle/active state visual distinction (e.g., dimmed orb when idle, glowing orb when active).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-multilingual-support-in-the-frontend-ui-allow-users-to-select-their-preferred-language-from-english-telugu-and-hindi-via-a-language-selector-in-the-settings-panel-store-the-selected-language-preference-and-display-friday-s-ui-labels-and-placeholder-text-in-the-chosen-language-show-a-language-badge-in-the-interface-indicating-the-current-active-language",
+      "title": "Implement multilingual support in the frontend UI. Allow users to select their preferred language from English, Telugu, and Hindi via a language selector in the settings panel. Store the selected language preference and display FRIDAY's UI labels and placeholder text in the chosen language. Show a language badge in the interface indicating the current active language.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-intelligent-command-parser-in-the-frontend-that-interprets-user-input-and-maps-it-to-one-of-friday-s-capability-categories-system-control-open-app-volume-screenshot-file-management-search-files-list-files-web-search-search-the-web-for-x-communication-send-email-read-email-content-creation-write-email-create-presentation-code-snippet-and-general-conversation-display-the-detected-intent-as-a-small-tag-badge-on-friday-s-response-card",
+      "title": "Build an intelligent command parser in the frontend that interprets user input and maps it to one of FRIDAY's capability categories: System Control (open app, volume, screenshot), File Management (search files, list files), Web Search (search the web for X), Communication (send email, read email), Content Creation (write email, create presentation, code snippet), and General Conversation. Display the detected intent as a small tag/badge on FRIDAY's response card.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-task-execution-response-system-for-each-detected-intent-category-friday-provides-a-structured-context-aware-response-for-system-control-commands-friday-responds-with-what-it-would-do-and-provides-os-level-instructions-or-simulation-feedback-for-web-search-friday-provides-a-simulated-search-summary-for-content-creation-emails-code-presentations-friday-generates-and-displays-the-content-inline-in-a-formatted-code-text-block-within-the-chat",
+      "title": "Implement a task execution response system: for each detected intent category, FRIDAY provides a structured, context-aware response. For system control commands, FRIDAY responds with what it would do and provides OS-level instructions or simulation feedback. For web search, FRIDAY provides a simulated search summary. For content creation (emails, code, presentations), FRIDAY generates and displays the content inline in a formatted code/text block within the chat.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-authentication-for-friday-only-an-authenticated-user-can-access-the-assistant-show-a-branded-friday-login-screen-with-the-logo-and-an-authenticate-with-internet-identity-button-before-the-chat-is-accessible-after-login-display-the-user-s-principal-id-in-the-settings-sidebar-add-a-logout-button-that-clears-the-session",
+      "title": "Implement Internet Identity authentication for FRIDAY. Only an authenticated user can access the assistant. Show a branded FRIDAY login screen with the logo and an 'Authenticate with Internet Identity' button before the chat is accessible. After login, display the user's principal ID in the settings sidebar. Add a logout button that clears the session.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-settings-sidebar-panel-accessible-via-a-gear-icon-the-panel-should-include-language-selector-english-telugu-hindi-voice-output-toggle-voice-speed-pitch-sliders-user-display-name-input-saved-to-backend-conversation-history-viewer-with-a-clear-history-button-and-an-about-friday-section-displaying-version-and-capabilities",
+      "title": "Create a settings sidebar panel accessible via a gear icon. The panel should include: language selector (English/Telugu/Hindi), voice output toggle, voice speed/pitch sliders, user display name input (saved to backend), conversation history viewer with a 'Clear History' button, and an 'About FRIDAY' section displaying version and capabilities.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-conversation-history-from-the-backend-into-the-chat-on-login-on-authentication-fetch-the-last-50-messages-from-the-backend-and-render-them-in-the-chat-window-clearly-marked-with-timestamps-new-messages-sent-during-the-session-must-be-saved-to-the-backend-in-real-time-via-update-calls",
+      "title": "Integrate conversation history from the backend into the chat on login. On authentication, fetch the last 50 messages from the backend and render them in the chat window, clearly marked with timestamps. New messages sent during the session must be saved to the backend in real time via update calls.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-quick-action-command-palette-accessible-via-a-prefix-in-the-chat-input-or-a-dedicated-button-display-a-grid-of-pre-built-command-shortcuts-such-as-search-web-write-email-write-code-system-info-translate-set-reminder-tell-a-joke-weather-clicking-a-shortcut-pre-fills-the-input-with-a-prompt-template-for-that-command",
+      "title": "Add a quick-action command palette accessible via a '/' prefix in the chat input or a dedicated button. Display a grid of pre-built command shortcuts such as: 'Search Web', 'Write Email', 'Write Code', 'System Info', 'Translate', 'Set Reminder', 'Tell a Joke', 'Weather'. Clicking a shortcut pre-fills the input with a prompt template for that command.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Voice interaction with wake word detection (Hey Friday), speech recognition via Whisper, and TTS output",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Multilingual support for English, Telugu, Hindi and additional languages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Device and system control: open apps, manage files, control volume, take screenshots, get system info",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Task execution: image generation, email sending/reading, web search, scheduling, content creation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Memory system using SQLite and ChromaDB for conversation history, user preferences, and semantic search",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "LLM brain integration with GPT-4 for natural language understanding, context awareness, and task planning",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Security layer with user authentication, password hashing, and session management",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Mobile and laptop integration via socket bridge for cross-device command relay",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Expandability hooks for future smart home control, face recognition, gesture recognition, and AI agent collaboration",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Build a Motoko backend actor that stores user conversation history, user preferences (language, voice settings, name), and session data. Expose stable storage using a Trie or HashMap keyed by user principal. Provide query and update functions for: saving a message, retrieving conversation history (paginated), saving/reading user preferences, and clearing history.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "FRIDAY",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

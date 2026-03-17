@@ -1,0 +1,400 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "FRIDAY - AI Personal Assistant Web App Frontend Implementation",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create a JARVIS-inspired dark UI theme with glowing amber/gold accents, animated HUD elements, and responsive two-panel layout",
+      "acceptanceCriteria": [
+        "Dark background (#0a0a0f or similar) with gold/amber accents (#f5a623 or similar)",
+        "Animated pulsing orb or circular visualizer visible when FRIDAY is active or speaking",
+        "Sidebar displays conversation history and basic settings",
+        "Layout is responsive and works on desktop and tablet viewports",
+        "All text is legible with sufficient contrast ratios"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add CSS custom properties for FRIDAY theme colors: deep black background (#0a0a0f), dark charcoal surfaces (#1a1a24), glowing amber/gold accents (#f5a623, #d4941a), and define keyframe animations for pulsing orb, glow effects, and HUD elements. Include base typography styles for clean sans-serif fonts with proper contrast ratios."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with FRIDAY color palette (friday-dark, friday-surface, friday-gold, friday-gold-dim), custom animations (pulse-orb, glow, slide-in), and responsive breakpoints for two-panel layout."
+        },
+        {
+          "path": "frontend/src/components/AnimatedOrb.tsx",
+          "operation": "create",
+          "description": "Create animated orb component with pulsing/glowing animations for FRIDAY's active state. Use the generated image frontend/public/assets/generated/friday-avatar.dim_128x128.png as the base orb graphic, wrapped in animated SVG or CSS layers for glow effects. Support idle (dimmed) and active (glowing) states via props."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "create",
+          "description": "Create main responsive two-panel layout component: left sidebar for history/settings (collapsible on mobile), main chat area taking remaining space. Apply FRIDAY dark theme styling. Include header with FRIDAY logo (frontend/public/assets/generated/friday-logo.dim_256x256.png) and AnimatedOrb indicator."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Build FRIDAY chat interface with conversation display, text input, send button, microphone button, and thinking animation",
+      "acceptanceCriteria": [
+        "User messages appear right-aligned; FRIDAY responses appear left-aligned with FRIDAY avatar/icon",
+        "A typing/thinking animation is shown while awaiting a response",
+        "Text input supports Enter key to send",
+        "Microphone button toggles voice input mode with visual indicator",
+        "Chat history scrolls automatically to the latest message"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "create",
+          "description": "Create full-screen chat window component displaying conversation messages. Fetch and render conversation history from backend using getConversationHistory. User messages right-aligned with distinct styling; FRIDAY responses left-aligned with avatar icon (frontend/public/assets/generated/friday-avatar.dim_128x128.png). Auto-scroll to latest message using useEffect with ref. Show ThinkingAnimation while awaiting response."
+        },
+        {
+          "path": "frontend/src/components/ChatMessage.tsx",
+          "operation": "create",
+          "description": "Create message component with conditional styling for user vs FRIDAY messages. Include timestamp display, avatar for FRIDAY messages using frontend/public/assets/generated/friday-avatar.dim_128x128.png, and intent badge display area (for REQ-6)."
+        },
+        {
+          "path": "frontend/src/components/ChatInput.tsx",
+          "operation": "create",
+          "description": "Create chat input component with text field, send button, and microphone button. Handle Enter key to send. Microphone button toggles voice input mode with visual indicator. Integrate with speech recognition hook (REQ-3). On message send, call backend saveMessage and update local state."
+        },
+        {
+          "path": "frontend/src/components/ThinkingAnimation.tsx",
+          "operation": "create",
+          "description": "Create thinking/typing indicator animation component with three animated dots or pulsing effect using FRIDAY gold accent color. Displayed while processing response."
+        },
+        {
+          "path": "frontend/src/hooks/useChat.ts",
+          "operation": "create",
+          "description": "Create chat state management hook managing message list, sending messages, loading state, and simulated AI response generation. Call backend saveMessage for each new message. Handle pagination for history loading from getConversationHistory."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement browser-based voice interaction using Web Speech API for speech recognition and synthesis with visual audio animation",
+      "acceptanceCriteria": [
+        "Clicking the microphone button starts voice recognition and transcribes speech to the input field",
+        "FRIDAY's text responses are read aloud via SpeechSynthesis when voice mode is enabled",
+        "A visual indicator (pulsing animation or waveform) is shown while FRIDAY is speaking",
+        "Voice output can be toggled on/off via a settings control",
+        "Microphone permission request is handled gracefully with a user-facing error message if denied"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useSpeechRecognition.ts",
+          "operation": "create",
+          "description": "Create hook wrapping Web Speech API SpeechRecognition for voice-to-text. Handle permission requests, transcription state, errors (show user-facing error if denied), and interim/final results. Return transcript, isListening state, start/stop functions."
+        },
+        {
+          "path": "frontend/src/hooks/useSpeechSynthesis.ts",
+          "operation": "create",
+          "description": "Create hook wrapping Web Speech API SpeechSynthesis for text-to-speech. Accept text input and voice settings (language, speed, pitch from preferences). Handle speaking state, voice selection matching user's language preference, and toggle on/off. Return speak function, isSpeaking state, and stop function."
+        },
+        {
+          "path": "frontend/src/components/AudioVisualizer.tsx",
+          "operation": "create",
+          "description": "Create visual audio waveform/pulse animation component shown while FRIDAY is speaking. Use CSS animations or Canvas API for animated bars/circles synced to speaking state. Styled with FRIDAY gold accent colors."
+        },
+        {
+          "path": "frontend/src/components/ChatInput.tsx",
+          "operation": "modify",
+          "description": "Integrate useSpeechRecognition hook. Microphone button starts/stops recognition, updates input field with transcript, shows visual indicator while listening. Handle permission errors with inline error message display."
+        },
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "modify",
+          "description": "Integrate useSpeechSynthesis hook. When voice output is enabled (from user preferences), automatically speak FRIDAY's responses. Display AudioVisualizer component while isSpeaking is true."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement wake word detection simulation: typing/saying 'Hey Friday' activates FRIDAY from idle state with visual and audio feedback",
+      "acceptanceCriteria": [
+        "Typing 'Hey Friday' or similar trigger phrase activates FRIDAY from idle state",
+        "Idle state shows a dimmed/static orb; active state shows a glowing/animated orb",
+        "FRIDAY responds with a greeting message upon activation",
+        "State persists for the duration of the session until manually deactivated"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useWakeWord.ts",
+          "operation": "create",
+          "description": "Create hook detecting 'Hey Friday' or similar phrases (case-insensitive pattern matching) in user input text or speech transcript. Manage active/idle state in React state. Return isActive state and activate function."
+        },
+        {
+          "path": "frontend/src/components/AnimatedOrb.tsx",
+          "operation": "modify",
+          "description": "Accept isActive prop to toggle between idle (dimmed/static) and active (glowing/pulsing) visual states. Apply different animation classes based on state."
+        },
+        {
+          "path": "frontend/src/components/ChatInput.tsx",
+          "operation": "modify",
+          "description": "Integrate useWakeWord hook. Check input text for wake phrase on every change. If detected, activate FRIDAY and inject a greeting response into the chat."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Pass isActive state from useWakeWord to AnimatedOrb component in the header, ensuring visual state reflects FRIDAY's activation status."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement multilingual support for English, Telugu, and Hindi with language selector, UI label updates, and language badge",
+      "acceptanceCriteria": [
+        "Language selector dropdown is accessible from the settings sidebar",
+        "UI labels (e.g., input placeholder, button tooltips) update to reflect selected language",
+        "Selected language is persisted in localStorage across sessions",
+        "Current language is visibly indicated in the UI (e.g., a flag icon or language badge)",
+        "SpeechSynthesis voice is set to match the selected language when available"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/i18n/translations.ts",
+          "operation": "create",
+          "description": "Create translation object with keys for all UI labels and placeholders in English, Telugu (te), and Hindi (hi). Include chat input placeholder, button tooltips, settings labels, wake greeting, etc."
+        },
+        {
+          "path": "frontend/src/hooks/useLanguage.ts",
+          "operation": "create",
+          "description": "Create language state management hook. Load selected language from localStorage on mount, provide setLanguage function persisting to localStorage and calling backend savePreferences. Return current language and translation helper function."
+        },
+        {
+          "path": "frontend/src/components/LanguageSelector.tsx",
+          "operation": "create",
+          "description": "Create language selector dropdown component for settings sidebar. Display English, Telugu, Hindi options. On selection, update language via useLanguage hook and save to backend preferences."
+        },
+        {
+          "path": "frontend/src/components/LanguageBadge.tsx",
+          "operation": "create",
+          "description": "Create small language indicator badge component displaying current active language code (EN/TE/HI) or flag icon. Positioned in header or sidebar."
+        },
+        {
+          "path": "frontend/src/hooks/useSpeechSynthesis.ts",
+          "operation": "modify",
+          "description": "Accept language parameter. Filter available voices by language code and select appropriate voice for SpeechSynthesis based on user's language preference."
+        },
+        {
+          "path": "frontend/src/components/ChatInput.tsx",
+          "operation": "modify",
+          "description": "Use translation helper from useLanguage to set placeholder text dynamically based on selected language."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Build intelligent command parser mapping user input to capability categories (System Control, File Management, Web Search, Communication, Content Creation, General Conversation) with intent badges",
+      "acceptanceCriteria": [
+        "User input is parsed client-side using keyword and pattern matching to detect intent category",
+        "Each FRIDAY response card displays a small badge (e.g., 'WEB SEARCH', 'SYSTEM', 'CREATIVE') indicating the resolved intent",
+        "At least 6 intent categories are supported with distinct response templates",
+        "Unrecognized inputs fall back gracefully to a general conversation response",
+        "Intent detection logic is modular and easily extensible"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/intentParser.ts",
+          "operation": "create",
+          "description": "Create intent parser utility with pattern matching logic. Define 6+ intent categories: SYSTEM_CONTROL, FILE_MANAGEMENT, WEB_SEARCH, COMMUNICATION, CONTENT_CREATION, GENERAL_CONVERSATION. Export parseIntent function accepting user input text and returning detected intent category. Use keyword arrays and regex patterns for matching."
+        },
+        {
+          "path": "frontend/src/components/IntentBadge.tsx",
+          "operation": "create",
+          "description": "Create small badge component displaying intent category (e.g., 'WEB SEARCH', 'SYSTEM', 'CREATIVE'). Accept intent string prop and apply color-coded styling per category."
+        },
+        {
+          "path": "frontend/src/components/ChatMessage.tsx",
+          "operation": "modify",
+          "description": "For FRIDAY messages, render IntentBadge component if message has detected intent metadata. Position badge in message card header or corner."
+        },
+        {
+          "path": "frontend/src/hooks/useChat.ts",
+          "operation": "modify",
+          "description": "On user message send, call parseIntent to detect intent category. Store intent in message metadata. Pass intent to response generator (REQ-7) for context-aware reply generation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement task execution response system providing structured, context-aware responses for each intent category with formatted output blocks",
+      "acceptanceCriteria": [
+        "Code generation responses are displayed in a styled code block with syntax highlighting",
+        "Email drafts are displayed in a structured card with To/Subject/Body fields",
+        "System control responses describe the action taken and any simulated output",
+        "Web search responses provide a structured summary with simulated results",
+        "All response types are visually distinct and easy to read"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/responseGenerator.ts",
+          "operation": "create",
+          "description": "Create response generator utility. Accept user input and detected intent category. Return structured response object with formatted content based on intent type. For CONTENT_CREATION intents (code, email, presentation), generate template content. For SYSTEM_CONTROL, generate descriptive action feedback. For WEB_SEARCH, generate simulated search summary. For COMMUNICATION, generate email draft structure. Include response templates for each category."
+        },
+        {
+          "path": "frontend/src/components/CodeBlock.tsx",
+          "operation": "create",
+          "description": "Create code block component with syntax highlighting for code generation responses. Use a lightweight syntax highlighter (e.g., react-syntax-highlighter or Prism.js via CDN). Apply FRIDAY dark theme colors."
+        },
+        {
+          "path": "frontend/src/components/EmailDraftCard.tsx",
+          "operation": "create",
+          "description": "Create email draft display component with structured fields: To, Subject, Body. Styled as a card with clear field labels and proper spacing."
+        },
+        {
+          "path": "frontend/src/components/SearchResultCard.tsx",
+          "operation": "create",
+          "description": "Create search result display component for web search responses. Show simulated search results with title, snippet, and source in a list format."
+        },
+        {
+          "path": "frontend/src/hooks/useChat.ts",
+          "operation": "modify",
+          "description": "Integrate responseGenerator. On user message, call generateResponse with input and detected intent. Store generated response with metadata indicating response type (code/email/search/system/general). Render appropriate specialized component based on response type."
+        },
+        {
+          "path": "frontend/src/components/ChatMessage.tsx",
+          "operation": "modify",
+          "description": "Conditionally render specialized response components (CodeBlock, EmailDraftCard, SearchResultCard) based on message response type metadata. Default to plain text rendering for general conversation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Implement Internet Identity authentication with branded FRIDAY login screen, principal display, and logout functionality. Use the authorization component to enforce authentication and manage user roles.",
+      "acceptanceCriteria": [
+        "Unauthenticated users see only the FRIDAY login screen and cannot access the chat",
+        "Clicking 'Authenticate' triggers Internet Identity login flow",
+        "After successful authentication, the user is taken to the main FRIDAY chat interface",
+        "User's principal is displayed in the settings sidebar",
+        "Logout button ends the session and returns to the login screen",
+        "Backend functions are principal-scoped so each user only accesses their own data"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginScreen.tsx",
+          "operation": "create",
+          "description": "Create branded FRIDAY login screen component. Display FRIDAY logo (frontend/public/assets/generated/friday-logo.dim_256x256.png) centered, use login background image (frontend/public/assets/generated/friday-bg.dim_1920x1080.png) as full-screen background with overlay. Include 'Authenticate with Internet Identity' button triggering login flow via useInternetIdentity hook. Apply FRIDAY dark theme styling. Use the authorization component to enforce authentication; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/LogoutButton.tsx",
+          "operation": "create",
+          "description": "Create logout button component calling clear() from useInternetIdentity and clearing React Query cache. Styled with FRIDAY theme. Placed in settings sidebar."
+        },
+        {
+          "path": "frontend/src/components/PrincipalDisplay.tsx",
+          "operation": "create",
+          "description": "Create component displaying user's principal ID in settings sidebar. Fetch principal from useInternetIdentity identity object. Format principal string for readability (truncate with ellipsis or show first/last segments)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add authentication gating logic. If not authenticated (identity is null), render LoginScreen only. If authenticated, render main Layout with chat interface. Handle login state transitions. Use the authorization component to manage user roles and permissions; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Create settings sidebar panel with language selector, voice controls, user display name input, conversation history viewer, clear history button, and About section",
+      "acceptanceCriteria": [
+        "Settings panel slides in from the left or right when the gear icon is clicked",
+        "Language selector, voice toggle, and speed/pitch controls are functional and update behavior immediately",
+        "Display name is saved to the backend on blur/enter and shown in the chat header",
+        "Clear History button calls the backend clearHistory function and empties the local chat display",
+        "About section lists FRIDAY's version, supported languages, and key capabilities"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SettingsSidebar.tsx",
+          "operation": "create",
+          "description": "Create settings sidebar panel component with slide-in animation. Include sections: language selector (LanguageSelector), voice output toggle, voice speed/pitch sliders, user display name input, conversation history summary, clear history button, about section. Fetch and display user preferences from backend getPreferences. Save preferences to backend on changes. Call backend clearHistory and clear local chat state on clear button click."
+        },
+        {
+          "path": "frontend/src/components/VoiceControls.tsx",
+          "operation": "create",
+          "description": "Create voice controls component with toggle for voice output on/off, sliders for speed (0.5-2.0) and pitch (0.5-2.0). Update voice settings in useLanguage state and save to backend preferences."
+        },
+        {
+          "path": "frontend/src/components/UserNameInput.tsx",
+          "operation": "create",
+          "description": "Create user display name input field component. Load current name from backend getCallerUserProfile. On blur or Enter key, save updated name via backend saveCallerUserProfile. Show save status indicator (saving/saved)."
+        },
+        {
+          "path": "frontend/src/components/AboutSection.tsx",
+          "operation": "create",
+          "description": "Create About FRIDAY section component listing version (e.g., 'v1.0.0'), supported languages (English, Telugu, Hindi), and key capabilities (voice interaction, multilingual support, task automation, memory system)."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Add gear icon button in header to toggle SettingsSidebar visibility. Integrate SettingsSidebar component with slide-in/out animation based on open state. Display user name from profile in header if available."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Integrate conversation history from backend: fetch last 50 messages on login, render with timestamps, and save new messages in real time",
+      "acceptanceCriteria": [
+        "On login, getHistory(50) is called and results are rendered in the chat",
+        "Each message shows a formatted timestamp",
+        "Every new user message and FRIDAY response is saved to the backend via saveMessage",
+        "History loads without blocking the UI (async with loading indicator)",
+        "Messages are displayed in chronological order"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useConversationHistory.ts",
+          "operation": "create",
+          "description": "Create hook to fetch conversation history from backend. Call getConversationHistory(0, 50) on mount when authenticated. Return messages array, loading state, and error state. Use React Query for caching and refetching."
+        },
+        {
+          "path": "frontend/src/components/ChatWindow.tsx",
+          "operation": "modify",
+          "description": "Integrate useConversationHistory hook. On component mount (after authentication), fetch and render historical messages. Show loading indicator while fetching. Merge historical messages with new session messages. Ensure chronological order by sorting by timestamp."
+        },
+        {
+          "path": "frontend/src/hooks/useChat.ts",
+          "operation": "modify",
+          "description": "On every new message send (user or FRIDAY), call backend saveMessage with message object (id, content, sender, timestamp). Handle async save without blocking UI. Include error handling for failed saves."
+        },
+        {
+          "path": "frontend/src/components/ChatMessage.tsx",
+          "operation": "modify",
+          "description": "Display formatted timestamp for each message. Use date formatting utility to show human-readable time (e.g., 'HH:MM' or relative time like '5 minutes ago')."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Add quick-action command palette accessible via '/' prefix or button, displaying pre-built command shortcuts with template prompts",
+      "acceptanceCriteria": [
+        "Typing '/' in the input field opens the command palette overlay",
+        "At least 8 command shortcuts are displayed in a grid with icons and labels",
+        "Clicking a shortcut fills the input field with a template prompt",
+        "The palette can be dismissed by pressing Escape or clicking outside",
+        "A dedicated palette button is visible in the input toolbar"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/CommandPalette.tsx",
+          "operation": "create",
+          "description": "Create command palette overlay component displaying grid of 8+ pre-built command shortcuts: 'Search Web', 'Write Email', 'Write Code', 'System Info', 'Translate', 'Set Reminder', 'Tell a Joke', 'Weather'. Each shortcut has icon and label. On click, insert template prompt into chat input and close palette. Handle Escape key and outside click to dismiss."
+        },
+        {
+          "path": "frontend/src/utils/commandTemplates.ts",
+          "operation": "create",
+          "description": "Create command templates utility with template prompt strings for each quick action (e.g., 'Search Web' -> 'Search the web for [topic]', 'Write Email' -> 'Write an email to [recipient] about [subject]'). Export template map keyed by command name."
+        },
+        {
+          "path": "frontend/src/components/ChatInput.tsx",
+          "operation": "modify",
+          "description": "Detect '/' prefix in input field. On '/' typed at start of input, open CommandPalette overlay. Add dedicated command palette button in input toolbar triggering palette. Accept command selection from palette and insert template into input field."
+        }
+      ]
+    }
+  ]
+}

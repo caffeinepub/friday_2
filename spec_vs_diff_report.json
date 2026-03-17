@@ -1,0 +1,95 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-03-16T16:48:55.263Z",
+  "summary": "The diff implements a comprehensive FRIDAY AI assistant web app with frontend React/TypeScript components and a Motoko backend. Most requirements appear to be addressed, but the diff is heavily truncated (24 added files omitted), making complete verification impossible. Key observations: the backend signature for saveMessage differs from the spec (takes a Message object rather than individual parameters), and getHistory is named getConversationHistory with different parameters. Several requirements appear implemented but cannot be fully confirmed due to truncation.",
+  "missing_requirements": [
+    {
+      "id": "REQ-8",
+      "requirement": "saveMessage(role: Text, content: Text, timestamp: Int) : async () stores a message; getHistory(limit: Nat) : async [Message] returns the last N messages",
+      "reason": "The backend exposes saveMessage(message: Message.Message) taking a composite object rather than individual (role, content, timestamp) parameters. The retrieval function is getConversationHistory(page, pageSize) with pagination params, not getHistory(limit: Nat). The Message type also uses 'sender' instead of 'role'. These signatures deviate from the spec's AC.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "ProfileSetupModal for initial user onboarding with name entry on first login",
+      "reason": "The build request does not mention a profile setup modal or first-time onboarding flow. REQ-10 mentions a display name input in settings, but not a mandatory setup modal blocking access.",
+      "evidence": [
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "description": "MixinAuthorization and AccessControl role-based permission system in the backend",
+      "reason": "The build request specifies principal-scoped data isolation but does not specify a role-based access control system with user and admin roles. The spec requires only Internet Identity principal scoping.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "saveCallerUserProfile / getCallerUserProfile / getUserProfile backend functions for a separate UserProfile type",
+      "reason": "The build request's REQ-8 specifies savePreferences with a UserPreferences type (language, voiceSettings, name). A separate UserProfile type with principalId and dedicated profile CRUD functions was not requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/ProfileSetupModal.tsx"
+      ]
+    },
+    {
+      "description": "WEATHER, REMINDER, TRANSLATION, and JOKE as distinct IntentCategory values beyond the six specified",
+      "reason": "REQ-6 specifies exactly 6 intent categories: System Control, File Management, Web Search, Communication, Content Creation, and General Conversation. The IntentBadge component adds WEATHER, REMINDER, TRANSLATION, and JOKE as additional categories beyond the spec.",
+      "evidence": [
+        "frontend/src/components/IntentBadge.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.55,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AboutSection.tsx",
+    "frontend/src/components/AnimatedOrb.tsx",
+    "frontend/src/components/AudioVisualizer.tsx",
+    "frontend/src/components/ChatInput.tsx",
+    "frontend/src/components/ChatMessage.tsx",
+    "frontend/src/components/ChatWindow.tsx",
+    "frontend/src/components/CodeBlock.tsx",
+    "frontend/src/components/CommandPalette.tsx",
+    "frontend/src/components/EmailDraftCard.tsx",
+    "frontend/src/components/IntentBadge.tsx",
+    "frontend/src/components/LanguageBadge.tsx",
+    "frontend/src/components/LanguageSelector.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/LoginScreen.tsx",
+    "frontend/src/components/PrincipalDisplay.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/SearchResultCard.tsx",
+    "frontend/src/components/SettingsSidebar.tsx",
+    "frontend/src/components/ThinkingAnimation.tsx",
+    "frontend/src/components/UserNameInput.tsx",
+    "frontend/src/components/VoiceControls.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useChat.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useLanguage.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useSpeechRecognition.ts",
+    "frontend/src/hooks/useSpeechSynthesis.ts",
+    "frontend/src/hooks/useWakeWord.ts",
+    "frontend/src/i18n/translations.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/utils/commandTemplates.ts",
+    "frontend/src/utils/intentParser.ts",
+    "frontend/src/utils/responseGenerator.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

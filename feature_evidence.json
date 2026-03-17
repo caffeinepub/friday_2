@@ -1,0 +1,251 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-jarvis-inspired-dark-ui-theme-for-friday-with-a-sleek-futuristic-aesthetic-deep-black-dark-charcoal-backgrounds-glowing-amber-gold-accent-colors-clean-sans-serif-typography-animated-hud-style-elements-circular-audio-visualizer-pulsing-orb-for-active-state-and-a-responsive-two-panel-layout-sidebar-for-history-settings-main-chat-area-apply-this-theme-consistently-across-all-components",
+      "featureTitle": "Create a JARVIS-inspired dark UI theme for FRIDAY with a sleek, futuristic aesthetic: deep black/dark charcoal backgrounds, glowing amber/gold accent colors, clean sans-serif typography, animated HUD-style elements (circular audio visualizer, pulsing orb for active state), and a responsive two-panel layout (sidebar for history/settings, main chat area). Apply this theme consistently across all components.",
+      "files": [
+        "frontend/src/components/AnimatedOrb.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-friday-chat-interface-with-a-full-screen-chat-window-that-displays-conversation-messages-differentiating-between-user-messages-and-friday-s-responses-with-distinct-styling-include-a-text-input-field-with-a-send-button-and-a-microphone-button-for-voice-input-display-friday-s-thinking-animation-while-processing-a-response",
+      "featureTitle": "Build the FRIDAY chat interface with a full-screen chat window that displays conversation messages, differentiating between user messages and FRIDAY's responses with distinct styling. Include a text input field with a send button and a microphone button for voice input. Display FRIDAY's 'thinking' animation while processing a response.",
+      "files": [
+        "frontend/src/components/ChatInput.tsx",
+        "frontend/src/components/ChatMessage.tsx",
+        "frontend/src/components/ChatWindow.tsx",
+        "frontend/src/components/ThinkingAnimation.tsx",
+        "frontend/src/hooks/useChat.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-browser-based-voice-interaction-using-the-web-speech-api-speech-recognition-speechrecognition-for-converting-user-voice-to-text-and-speech-synthesis-speechsynthesis-for-friday-to-speak-responses-aloud-include-a-visual-audio-waveform-pulse-animation-while-friday-is-speaking-support-toggling-voice-output-on-off",
+      "featureTitle": "Implement browser-based voice interaction using the Web Speech API: speech recognition (SpeechRecognition) for converting user voice to text, and speech synthesis (SpeechSynthesis) for FRIDAY to speak responses aloud. Include a visual audio waveform/pulse animation while FRIDAY is speaking. Support toggling voice output on/off.",
+      "files": [
+        "frontend/src/components/AudioVisualizer.tsx",
+        "frontend/src/components/ChatInput.tsx",
+        "frontend/src/components/ChatWindow.tsx",
+        "frontend/src/hooks/useSpeechRecognition.ts",
+        "frontend/src/hooks/useSpeechSynthesis.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-wake-word-detection-simulation-in-the-frontend-when-the-user-types-or-says-hey-friday-friday-activates-from-an-idle-state-plays-a-brief-activation-sound-or-animation-and-acknowledges-with-a-greeting-include-an-idle-active-state-visual-distinction-e-g-dimmed-orb-when-idle-glowing-orb-when-active",
+      "featureTitle": "Implement a wake word detection simulation in the frontend: when the user types or says 'Hey Friday', FRIDAY activates from an idle state, plays a brief activation sound or animation, and acknowledges with a greeting. Include an idle/active state visual distinction (e.g., dimmed orb when idle, glowing orb when active).",
+      "files": [
+        "frontend/src/components/AnimatedOrb.tsx",
+        "frontend/src/components/ChatInput.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/hooks/useWakeWord.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-multilingual-support-in-the-frontend-ui-allow-users-to-select-their-preferred-language-from-english-telugu-and-hindi-via-a-language-selector-in-the-settings-panel-store-the-selected-language-preference-and-display-friday-s-ui-labels-and-placeholder-text-in-the-chosen-language-show-a-language-badge-in-the-interface-indicating-the-current-active-language",
+      "featureTitle": "Implement multilingual support in the frontend UI. Allow users to select their preferred language from English, Telugu, and Hindi via a language selector in the settings panel. Store the selected language preference and display FRIDAY's UI labels and placeholder text in the chosen language. Show a language badge in the interface indicating the current active language.",
+      "files": [
+        "frontend/src/components/ChatInput.tsx",
+        "frontend/src/components/LanguageBadge.tsx",
+        "frontend/src/components/LanguageSelector.tsx",
+        "frontend/src/hooks/useLanguage.ts",
+        "frontend/src/hooks/useSpeechSynthesis.ts",
+        "frontend/src/i18n/translations.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-intelligent-command-parser-in-the-frontend-that-interprets-user-input-and-maps-it-to-one-of-friday-s-capability-categories-system-control-open-app-volume-screenshot-file-management-search-files-list-files-web-search-search-the-web-for-x-communication-send-email-read-email-content-creation-write-email-create-presentation-code-snippet-and-general-conversation-display-the-detected-intent-as-a-small-tag-badge-on-friday-s-response-card",
+      "featureTitle": "Build an intelligent command parser in the frontend that interprets user input and maps it to one of FRIDAY's capability categories: System Control (open app, volume, screenshot), File Management (search files, list files), Web Search (search the web for X), Communication (send email, read email), Content Creation (write email, create presentation, code snippet), and General Conversation. Display the detected intent as a small tag/badge on FRIDAY's response card.",
+      "files": [
+        "frontend/src/components/ChatMessage.tsx",
+        "frontend/src/components/IntentBadge.tsx",
+        "frontend/src/hooks/useChat.ts",
+        "frontend/src/utils/intentParser.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-task-execution-response-system-for-each-detected-intent-category-friday-provides-a-structured-context-aware-response-for-system-control-commands-friday-responds-with-what-it-would-do-and-provides-os-level-instructions-or-simulation-feedback-for-web-search-friday-provides-a-simulated-search-summary-for-content-creation-emails-code-presentations-friday-generates-and-displays-the-content-inline-in-a-formatted-code-text-block-within-the-chat",
+      "featureTitle": "Implement a task execution response system: for each detected intent category, FRIDAY provides a structured, context-aware response. For system control commands, FRIDAY responds with what it would do and provides OS-level instructions or simulation feedback. For web search, FRIDAY provides a simulated search summary. For content creation (emails, code, presentations), FRIDAY generates and displays the content inline in a formatted code/text block within the chat.",
+      "files": [
+        "frontend/src/components/ChatMessage.tsx",
+        "frontend/src/components/CodeBlock.tsx",
+        "frontend/src/components/EmailDraftCard.tsx",
+        "frontend/src/components/SearchResultCard.tsx",
+        "frontend/src/hooks/useChat.ts",
+        "frontend/src/utils/responseGenerator.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-internet-identity-authentication-for-friday-only-an-authenticated-user-can-access-the-assistant-show-a-branded-friday-login-screen-with-the-logo-and-an-authenticate-with-internet-identity-button-before-the-chat-is-accessible-after-login-display-the-user-s-principal-id-in-the-settings-sidebar-add-a-logout-button-that-clears-the-session",
+      "featureTitle": "Implement Internet Identity authentication for FRIDAY. Only an authenticated user can access the assistant. Show a branded FRIDAY login screen with the logo and an 'Authenticate with Internet Identity' button before the chat is accessible. After login, display the user's principal ID in the settings sidebar. Add a logout button that clears the session.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoginScreen.tsx",
+        "frontend/src/components/PrincipalDisplay.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-settings-sidebar-panel-accessible-via-a-gear-icon-the-panel-should-include-language-selector-english-telugu-hindi-voice-output-toggle-voice-speed-pitch-sliders-user-display-name-input-saved-to-backend-conversation-history-viewer-with-a-clear-history-button-and-an-about-friday-section-displaying-version-and-capabilities",
+      "featureTitle": "Create a settings sidebar panel accessible via a gear icon. The panel should include: language selector (English/Telugu/Hindi), voice output toggle, voice speed/pitch sliders, user display name input (saved to backend), conversation history viewer with a 'Clear History' button, and an 'About FRIDAY' section displaying version and capabilities.",
+      "files": [
+        "frontend/src/components/AboutSection.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/SettingsSidebar.tsx",
+        "frontend/src/components/UserNameInput.tsx",
+        "frontend/src/components/VoiceControls.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-conversation-history-from-the-backend-into-the-chat-on-login-on-authentication-fetch-the-last-50-messages-from-the-backend-and-render-them-in-the-chat-window-clearly-marked-with-timestamps-new-messages-sent-during-the-session-must-be-saved-to-the-backend-in-real-time-via-update-calls",
+      "featureTitle": "Integrate conversation history from the backend into the chat on login. On authentication, fetch the last 50 messages from the backend and render them in the chat window, clearly marked with timestamps. New messages sent during the session must be saved to the backend in real time via update calls.",
+      "files": [
+        "frontend/src/components/ChatMessage.tsx",
+        "frontend/src/components/ChatWindow.tsx",
+        "frontend/src/hooks/useChat.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-quick-action-command-palette-accessible-via-a-prefix-in-the-chat-input-or-a-dedicated-button-display-a-grid-of-pre-built-command-shortcuts-such-as-search-web-write-email-write-code-system-info-translate-set-reminder-tell-a-joke-weather-clicking-a-shortcut-pre-fills-the-input-with-a-prompt-template-for-that-command",
+      "featureTitle": "Add a quick-action command palette accessible via a '/' prefix in the chat input or a dedicated button. Display a grid of pre-built command shortcuts such as: 'Search Web', 'Write Email', 'Write Code', 'System Info', 'Translate', 'Set Reminder', 'Tell a Joke', 'Weather'. Clicking a shortcut pre-fills the input with a prompt template for that command.",
+      "files": [
+        "frontend/src/components/ChatInput.tsx",
+        "frontend/src/components/CommandPalette.tsx",
+        "frontend/src/utils/commandTemplates.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
